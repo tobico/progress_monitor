@@ -1,4 +1,4 @@
-module ProgressTracker
+module ProgressMonitor
   class Task
     module PercentageCalculation
       class Status

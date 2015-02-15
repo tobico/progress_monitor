@@ -1,7 +1,7 @@
-module ProgressTracker
+module ProgressMonitor
   class Task
     module PercentageCalculation
-      class IoPosition
+      class AverageCompletionOfSubtasks
         attr :task
 
         def initialize(task)
@@ -9,8 +9,8 @@ module ProgressTracker
         end
 
         def perform
-          if task.io && task.io.size > 0
-            (100.0 * task.io.pos / task.io.size).to_i
+          if task.subtasks.any?
+            Utils.average task.subtasks.map(&:completion_percent)
           end
         rescue
           nil

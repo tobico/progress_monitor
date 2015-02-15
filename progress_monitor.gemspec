@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'progress_tracker/version'
+require 'progress_monitor/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "progress_tracker"
-  spec.version       = ProgressTracker::VERSION
+  spec.name          = "progress_monitor"
+  spec.version       = ProgressMonitor::VERSION
   spec.authors       = ["Tobias Cohen"]
   spec.email         = ["me@tobiascohen.com"]
   spec.summary       = %q{Interactively display progress in the terminal for long running multi-step processes}

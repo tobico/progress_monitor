@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler'
 
 Bundler.load
-require 'progress_tracker'
+require 'progress_monitor'
 
 class Example
 
@@ -82,8 +82,8 @@ class Example
   end
 
   def perform
-    task = ProgressTracker::Task.new("Initialize data")
-    ProgressTracker::Display.new(task).display
+    task = ProgressMonitor::Task.new("Initialize data")
+    ProgressMonitor::Display.new(task).display
 
     CreateUsers.new(task.add_subtask("Create users")).perform
   end

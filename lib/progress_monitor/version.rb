@@ -1,3 +1,3 @@
-module ProgressTracker
+module ProgressMonitor
   VERSION = "0.0.1"
 end

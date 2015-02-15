@@ -1,4 +1,4 @@
-module ProgressTracker
+module ProgressMonitor
   class Display
     class MessageLoop
       attr :queue, :main_thread, :renderer

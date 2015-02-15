@@ -1,8 +1,8 @@
-require "progress_tracker/task/percentage_calculation/status"
-require "progress_tracker/task/percentage_calculation/io_position"
-require "progress_tracker/task/percentage_calculation/average_completion_of_subtasks"
+require "progress_monitor/task/percentage_calculation/status"
+require "progress_monitor/task/percentage_calculation/io_position"
+require "progress_monitor/task/percentage_calculation/average_completion_of_subtasks"
 
-module ProgressTracker
+module ProgressMonitor
   class Task
     include Observable
 

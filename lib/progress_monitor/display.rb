@@ -1,12 +1,12 @@
-require "progress_tracker/display/task_observer"
-require "progress_tracker/display/input_loop"
-require "progress_tracker/display/message_loop"
-require "progress_tracker/display/timer_loop"
+require "progress_monitor/display/task_observer"
+require "progress_monitor/display/input_loop"
+require "progress_monitor/display/message_loop"
+require "progress_monitor/display/timer_loop"
 
-require "progress_tracker/display/renderer"
-require "progress_tracker/display/progress_bar"
+require "progress_monitor/display/renderer"
+require "progress_monitor/display/progress_bar"
 
-module ProgressTracker
+module ProgressMonitor
   class Display
     attr :task, :queue
 

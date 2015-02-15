@@ -1,4 +1,4 @@
-module ProgressTracker
+module ProgressMonitor
   class Display
     class ProgressBar
       attr_accessor :size, :completion_percent

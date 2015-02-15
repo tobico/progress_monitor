@@ -1,4 +1,4 @@
-module ProgressTracker
+module ProgressMonitor
   class Display
     class TaskObserver
       attr :queue
