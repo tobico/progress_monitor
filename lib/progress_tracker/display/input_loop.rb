@@ -1,6 +1,6 @@
 module ProgressTracker
   class Display
-    class InputHandler
+    class InputLoop
       attr :queue
 
       def initialize(queue)
@@ -8,9 +8,11 @@ module ProgressTracker
         @status = :normal
       end
 
-      def run
+      def perform
         loop { get_key }
       end
+
+      private
 
       def get_key
         key = STDIN.getch

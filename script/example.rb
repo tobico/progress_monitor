@@ -58,7 +58,7 @@ class Example
 
         until file.eof?
           file.getc
-          sleep 0.01
+          sleep 0.05
         end
         file.close
 

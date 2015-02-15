@@ -3,7 +3,7 @@ module ProgressTracker
     class ProgressBar
       attr_accessor :size, :completion_percent
 
-      def initialize(size:, completion_percent: 0)
+      def initialize(size: 20, completion_percent: 0)
         @size = size
         @completion_percent = completion_percent
       end
