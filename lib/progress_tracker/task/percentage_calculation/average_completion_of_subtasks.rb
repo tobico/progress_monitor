@@ -12,6 +12,8 @@ module ProgressTracker
           if task.subtasks.any?
             Utils.average task.subtasks.map(&:completion_percent)
           end
+        rescue
+          nil
         end
       end
     end

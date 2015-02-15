@@ -15,6 +15,8 @@ module ProgressTracker
             when :finished
               100
           end
+        rescue
+          nil
         end
       end
     end
