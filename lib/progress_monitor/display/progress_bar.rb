@@ -1,5 +1,6 @@
 module ProgressMonitor
   class Display
+    # Renders a fancy unicode progress bar
     class ProgressBar
       attr_accessor :size, :completion_percent
 

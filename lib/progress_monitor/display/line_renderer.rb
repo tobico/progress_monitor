@@ -1,17 +1,18 @@
 module ProgressMonitor
   class Display
+    # Renders a single line on the terminal showing the name and progress of a task
     class LineRenderer
       attr :task
 
       def initialize(task)
-        @current_state = nil
+        @current_state = :force_refresh
         @task = task
       end
 
       def task=(value)
         old_value = task
         @task = value
-        @current_state = nil if value != old_value
+        @current_state = :force_refresh if value != old_value
       end
 
       def needs_refresh?
@@ -25,28 +26,35 @@ module ProgressMonitor
       private
 
       def task_state
-        {
-          name:               task.name,
-          completion_percent: task.completion_percent,
-        }
+        if task
+          {
+            name:               task.name,
+            completion_percent: task.completion_percent,
+          }
+        else
+          :empty
+        end
       end
 
       def render(state)
-        left                            = state[:name]
-        progress_bar                    = ProgressBar.new(size: 20)
-        progress_bar.completion_percent = state[:completion_percent]
-        right                           = progress_bar.render
-        spacing                         = " " * (columns - left.length - right.length)
+        if task
+          left                            = state[:name]
+          progress_bar                    = ProgressBar.new(size: 20)
+          progress_bar.completion_percent = state[:completion_percent]
+          right                           = progress_bar.render
+          spacing                         = " " * (columns - left.length - right.length)
 
-        print clear_code, left, spacing, "\e[48;5;235m\e[32m", right, "\e[0m\r\e[#{left.length}C"
-
+          print clear_code, left, spacing, "\e[48;5;235m\e[32m", right, "\e[0m\r\e[#{left.length}C"
+        else
+          print clear_code
+        end
       rescue => e
         puts clear_code, e.inspect
         nil
       end
 
       def clear_code
-        "\e[1K\r"
+        "\e[2K\r"
       end
 
       def columns
