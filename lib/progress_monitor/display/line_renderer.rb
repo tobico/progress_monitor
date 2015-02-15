@@ -20,7 +20,7 @@ module ProgressMonitor
       end
 
       def refresh
-        render(task_state) if needs_refresh?
+        render task_state
       end
 
       private

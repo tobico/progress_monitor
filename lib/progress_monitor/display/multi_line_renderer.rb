@@ -20,6 +20,15 @@ module ProgressMonitor
         puts e.inspect, e.backtrace
       end
 
+      def info(message)
+        print "\n"
+        RowMover.new(@line_renderer_collection.count - 1) do |row_mover|
+          row_mover.row = -1
+          MessageRenderer.new(message).render
+        end
+        @line_renderer_collection.refresh(true)
+      end
+
       private
 
       def update_visible_tasks

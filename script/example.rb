@@ -25,7 +25,7 @@ class Example
           "Upload profile photo for #{name}",
           "Send welcome email"
         )
-        CreateRecord.new(create_record_task).perform
+        CreateRecord.new(name, create_record_task).perform
         UploadPhoto.new(name, upload_photo_task).perform
         SendEmail.new(send_email_task).perform
         user_task.finish
@@ -34,15 +34,17 @@ class Example
     end
 
     class CreateRecord
-      attr :task
+      attr :name, :task
 
-      def initialize(task)
+      def initialize(name, task)
+        @name = name
         @task = task
       end
 
       def perform
         task.start
         sleep 0.5
+        task.info "Created user #{name} with name length of #{name.length}"
         task.finish
       end
     end

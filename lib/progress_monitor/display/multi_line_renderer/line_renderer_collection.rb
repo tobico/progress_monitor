@@ -37,11 +37,11 @@ module ProgressMonitor
         end
 
         # Refreshes all of the line renderers managed by this collection, first moving to the correct row for each
-        # renderer
-        def refresh
+        # renderer. Specify force=true to refresh all items, regardless of whether or not they are stale
+        def refresh(force=false)
           RowMover.new(count - 1) do |row_mover|
             line_renderers.each_with_index do |line_renderer, line|
-              if line_renderer.needs_refresh?
+              if force || line_renderer.needs_refresh?
                 row_mover.row = line
                 line_renderer.refresh
               end

@@ -15,7 +15,7 @@ module ProgressMonitor
 
       def render
         if completion_percent == :unknown
-          '╍' * size
+          ''
         else
           completion_float = completion_percent.to_f / 100 * size
           completion_size = completion_float.floor

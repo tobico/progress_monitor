@@ -31,6 +31,8 @@ module ProgressMonitor
         case event
           when :status
             renderer.refresh
+          when :info
+            renderer.info details[:message]
         end
       end
 

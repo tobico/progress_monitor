@@ -73,6 +73,10 @@ module ProgressMonitor
       :unknown
     end
 
+    def info(message)
+      notify self, :info, {message: message}
+    end
+
     protected
 
     def notify(task, event, details)
