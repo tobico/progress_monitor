@@ -1,9 +1,19 @@
+require "progress_tracker/task/percentage_completion/status"
+require "progress_tracker/task/percentage_completion/io_position"
+require "progress_tracker/task/percentage_completion/average_completion_of_subtasks"
+
 module ProgressTracker
   class Task
     include Observable
 
     attr :name, :parent, :subtasks, :status, :started_at, :finished_at
     attr_accessor :io
+
+    PERCENTAGE_CALCULATORS = [
+      PercentageCalculation::Status,
+      PercentageCalculation::IoPosition,
+      PercentageCalculation::AverageCompletionOfSubtasks,
+    ]
 
     def initialize(name, parent=nil)
       @name = name
@@ -53,33 +63,14 @@ module ProgressTracker
     end
 
     def completion_percent
-      case status
-        when :new
-          0
-        when :started
-          completion_percent_from_io || average_completion_of_subtasks || 0
-        when :finished
-          100
-        else
-          :unknown
+      PERCENTAGE_CALCULATORS.each do |calculator|
+        result = calculator.new(self).perform
+        return result if result
       end
+      :unknown
     rescue => e
       puts e.inspect
       :unknown
-    end
-
-    def completion_percent_from_io
-      if io && io.size
-        (100.0 * io.pos / io.size).to_i
-      end
-    rescue
-      nil
-    end
-
-    def average_completion_of_subtasks
-      if subtasks.any?
-        Utils.average subtasks.map(&:completion_percent)
-      end
     end
 
     protected
