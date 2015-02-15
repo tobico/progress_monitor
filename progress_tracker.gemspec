@@ -8,8 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ProgressTracker::VERSION
   spec.authors       = ["Tobias Cohen"]
   spec.email         = ["me@tobiascohen.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Interactively display progress in the terminal for long running multi-step processes}
   spec.homepage      = ""
   spec.license       = "MIT"
 
