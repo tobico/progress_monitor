@@ -19,10 +19,12 @@ class Example
     def perform
       task.start
       task.add_and_run_subtasks NAMES, -> (name) { "Create user #{name}" } do |name, user_task|
+        user_task.start
         create_record, upload_photo, send_email = user_task.add_subtasks("Create user record", "Upload profile photo for #{name}", "Send welcome email")
         CreateRecord.new(create_record).perform
         UploadPhoto.new(name, upload_photo).perform
         SendEmail.new(send_email).perform
+        user_task.finish
       end
       task.finish
     end

@@ -4,6 +4,7 @@ require "progress_monitor/display/message_loop"
 require "progress_monitor/display/timer_loop"
 
 require "progress_monitor/display/renderer"
+require "progress_monitor/display/line_renderer"
 require "progress_monitor/display/progress_bar"
 
 module ProgressMonitor

@@ -30,7 +30,6 @@ module ProgressMonitor
       def on_update(task, event, details)
         case event
           when :status
-            renderer.task = task
             renderer.refresh
         end
       end
@@ -44,12 +43,12 @@ module ProgressMonitor
           when "\e[B"
             expand
           else
-            puts key.inspect
+            print key.inspect
         end
       end
 
       def on_timer
-        @renderer.refresh
+        renderer.refresh
       end
     end
   end
