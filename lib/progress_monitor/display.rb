@@ -30,6 +30,10 @@ module ProgressMonitor
       Thread.new { InputLoop.new(queue).perform }
       Thread.new { TimerLoop.new(queue).perform }
       Thread.new { MessageLoop.new(queue, @main_thread, @renderer).perform }
+
+      yield
+
+      sleep 0.2 until queue.empty?
     end
   end
 end
