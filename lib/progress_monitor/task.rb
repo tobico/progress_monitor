@@ -26,7 +26,7 @@ module ProgressMonitor
     def add_and_run_subtasks(items, name_fn, &run_fn)
       items.map do |item|
         [item, add_subtask(name_fn.call(item))]
-      end.each do |args|
+      end.map do |args|
         run_fn.call(*args)
       end
     end
