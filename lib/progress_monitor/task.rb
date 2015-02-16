@@ -1,51 +1,20 @@
-require "progress_monitor/task/percentage_calculation/status"
-require "progress_monitor/task/percentage_calculation/io_position"
-require "progress_monitor/task/percentage_calculation/average_completion_of_subtasks"
+require "progress_monitor/task/update_stream"
+require "progress_monitor/task/percentage_calculation"
 
 module ProgressMonitor
   class Task
-    include Observable
+    attr :name, :update_stream, :subtasks, :status, :started_at, :finished_at
+    attr_accessor :file
 
-    attr :name, :parent, :subtasks, :status, :started_at, :finished_at
-    attr_accessor :io
-
-    PERCENTAGE_CALCULATORS = [
-      PercentageCalculation::Status,
-      PercentageCalculation::IoPosition,
-      PercentageCalculation::AverageCompletionOfSubtasks,
-    ]
-
-    def initialize(name, parent=nil)
+    def initialize(name, update_stream=nil)
       @name = name
-      @parent = parent
+      @update_stream = update_stream || UpdateStream.new
       @subtasks = []
       @status = :new
     end
 
-    def start
-      return unless status == :new
-
-      parent.start if parent
-      @status = :started
-      @started_at = Time.now
-      notify_status
-    end
-
-    def finish
-      return unless status == :started
-
-      parent.finish_if_subtasks_finished
-      @status = :finished
-      @finished_at = Time.now
-      notify_status
-    end
-
-    def duration
-      finished_at - started_at
-    end
-
     def add_subtask(name)
-      Task.new(name, self).tap do |task|
+      Task.new(name, update_stream).tap do |task|
         @subtasks << task
       end
     end
@@ -62,37 +31,28 @@ module ProgressMonitor
       end
     end
 
-    def completion_percent
-      PERCENTAGE_CALCULATORS.each do |calculator|
-        result = calculator.new(self).perform
-        return result if result
-      end
-      :unknown
-    rescue => e
-      puts e.inspect
-      :unknown
+    def start
+      return unless status == :new
+
+      update_stream.notify(self, :status_change, from: @status, to: :started)
+      @status = :started
+      @started_at = Time.now
+    end
+
+    def finish
+      return unless status == :started
+
+      update_stream.notify(self, :status_change, from: @status, to: :finished)
+      @status = :finished
+      @finished_at = Time.now
     end
 
     def info(message)
-      notify self, :info, {message: message}
+      update_stream.notify(self, :info, message: message)
     end
 
-    protected
-
-    def notify(task, event, details)
-      parent.notify task, event, details if parent
-      changed
-      notify_observers task, event, details
-    end
-
-    def finish_if_subtasks_finished
-      finish if subtasks.all?{|st| st.status == :finished}
-    end
-
-    private
-
-    def notify_status
-      notify self, :status, {status: status}
+    def completion_percent
+      PercentageCalculation.new(self).perform
     end
   end
 end

@@ -1,7 +1,7 @@
 module ProgressMonitor
   class Task
-    module PercentageCalculation
-      class IoPosition
+    class PercentageCalculation
+      class FilePosition
         attr :task
 
         def initialize(task)
@@ -9,11 +9,11 @@ module ProgressMonitor
         end
 
         def perform
-          if task.io && task.io.size > 0
-            (100.0 * task.io.pos / task.io.size).to_i
+          if task.file && task.file.size > 0
+            (100.0 * task.file.pos / task.file.size).to_i
           end
         rescue
-          nil
+          :unknown
         end
       end
     end

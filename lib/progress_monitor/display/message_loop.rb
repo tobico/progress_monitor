@@ -29,7 +29,7 @@ module ProgressMonitor
 
       def on_update(task, event, details)
         case event
-          when :status
+          when :status_change
             renderer.refresh
           when :info
             renderer.info details[:message]

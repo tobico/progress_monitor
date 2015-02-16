@@ -1,6 +1,6 @@
 module ProgressMonitor
   class Task
-    module PercentageCalculation
+    class PercentageCalculation
       class Status
         attr :task
 

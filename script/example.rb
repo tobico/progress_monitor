@@ -62,7 +62,7 @@ class Example
 
         file = File.open(File.join(__dir__, 'sample.txt'))
 
-        task.io = file
+        task.file = file
 
         until file.eof?
           file.getc

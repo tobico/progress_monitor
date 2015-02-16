@@ -1,6 +1,6 @@
 module ProgressMonitor
   class Task
-    module PercentageCalculation
+    class PercentageCalculation
       class AverageCompletionOfSubtasks
         attr :task
 
@@ -13,7 +13,7 @@ module ProgressMonitor
             average(task.subtasks.map(&:completion_percent).reject{|x| x == :unknown})
           end
         rescue
-          nil
+          :unknown
         end
 
         private

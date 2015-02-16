@@ -24,7 +24,7 @@ module ProgressMonitor
       @renderer = MultiLineRenderer.new(task)
       @renderer.refresh
 
-      task.add_observer TaskObserver.new(queue)
+      task.update_stream.add_observer TaskObserver.new(queue)
 
       @main_thread = Thread.current
       Thread.new { InputLoop.new(queue).perform }
