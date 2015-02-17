@@ -44,12 +44,12 @@ module ProgressMonitor
           right                           = progress_bar.render
           spacing                         = " " * (columns - left.length - right.length)
 
-          print clear_code, left, spacing, "\e[48;5;235m\e[32m", right, "\e[0m\r\e[#{left.length}C"
+          STDOUT.print clear_code, left, spacing, "\e[48;5;235m\e[32m", right, "\e[0m\r\e[#{left.length}C"
         else
-          print clear_code
+          STDOUT.print clear_code
         end
       rescue => e
-        puts clear_code, e.inspect
+        STDOUT.puts clear_code, e.inspect
         nil
       end
 

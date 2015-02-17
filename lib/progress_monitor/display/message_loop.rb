@@ -19,6 +19,8 @@ module ProgressMonitor
               on_timer
             when :input
               on_input message[:key]
+            when :stdout
+              on_stdout message[:line]
           end
         end
       rescue => error
@@ -45,12 +47,16 @@ module ProgressMonitor
           when "\e[B"
             expand
           else
-            print key.inspect
+            STDOUT.print key.inspect
         end
       end
 
       def on_timer
         renderer.refresh
+      end
+
+      def on_stdout(line)
+        renderer.info line
       end
     end
   end

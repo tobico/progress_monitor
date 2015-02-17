@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'rubygems'
 require 'bundler'
 
@@ -62,6 +64,8 @@ class Example
 
         file = File.open(File.join(__dir__, 'sample.txt'))
 
+        puts "Uploading file of size #{file.size}"
+
         task.file = file
 
         until file.eof?
@@ -91,17 +95,17 @@ class Example
 
   def perform
     task = ProgressMonitor::Task.new("Demonstrate Progress Monitor")
-    ProgressMonitor::Display.new(task).display
+    ProgressMonitor::Display.new(task).display do
+      create_users_task = task.add_subtask("Create users")
+      shuffle_deck_chairs = task.add_subtask("Shuffle deck chairs")
 
-    create_users_task = task.add_subtask("Create users")
-    shuffle_deck_chairs = task.add_subtask("Shuffle deck chairs")
-
-    CreateUsers.new(create_users_task).perform
-    subtasks = shuffle_deck_chairs.add_subtasks(*(1..80).to_a.map{|x| "Shuffle chair #{x}"})
-    subtasks.each do |task|
-      task.start
-      sleep 0.5
-      task.finish
+      CreateUsers.new(create_users_task).perform
+      subtasks = shuffle_deck_chairs.add_subtasks(*(1..80).to_a.map{|x| "Shuffle chair #{x}"})
+      subtasks.each do |task|
+        task.start
+        sleep 0.5
+        task.finish
+      end
     end
   end
 

@@ -8,7 +8,7 @@ module ProgressMonitor
       end
 
       def render
-        print clear_code, info_tag, message
+        STDOUT.print clear_code, info_tag, message
       end
 
       private

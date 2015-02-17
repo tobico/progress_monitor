@@ -16,9 +16,9 @@ module ProgressMonitor
       # Moves the cursor to the specified row, relative to the initial row
       def row=(value)
         if row < value
-          print "\e[#{value - row}B"
+          STDOUT.print "\e[#{value - row}B"
         elsif row > value
-          print "\e[#{row - value}A"
+          STDOUT.print "\e[#{row - value}A"
         end
         @row = value
       end

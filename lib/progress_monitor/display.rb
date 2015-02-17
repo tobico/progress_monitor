@@ -2,6 +2,7 @@ require "progress_monitor/display/task_observer"
 require "progress_monitor/display/input_loop"
 require "progress_monitor/display/message_loop"
 require "progress_monitor/display/timer_loop"
+require "progress_monitor/display/io_loop"
 
 require "progress_monitor/display/multi_line_renderer"
 require "progress_monitor/display/line_renderer"
@@ -14,7 +15,7 @@ module ProgressMonitor
     attr :task, :queue
 
     def initialize(task)
-      @task = task
+      @task  = task
       @queue = Queue.new
     end
 
@@ -31,9 +32,13 @@ module ProgressMonitor
       Thread.new { TimerLoop.new(queue).perform }
       Thread.new { MessageLoop.new(queue, @main_thread, @renderer).perform }
 
+      piped_stdout, $stdout = IO.pipe
+      Thread.new { IoLoop.new(queue, piped_stdout).perform }
+
       yield
 
       sleep 0.2 until queue.empty?
+      $stdout = STDOUT
     end
   end
 end

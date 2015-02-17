@@ -27,7 +27,7 @@ module ProgressMonitor
           end
         end
       rescue => e
-        puts e
+        STDOUT.puts e
         ""
       end
     end

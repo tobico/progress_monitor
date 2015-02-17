@@ -21,7 +21,7 @@ module ProgressMonitor
       end
 
       def info(message)
-        print "\n"
+        STDOUT.print "\n"
         RowMover.new(@line_renderer_collection.count - 1) do |row_mover|
           row_mover.row = -1
           MessageRenderer.new(message).render
@@ -61,7 +61,7 @@ module ProgressMonitor
       # Prints out empty lines to increase the amount of space we have in the terminal buffer to work with
       def increase_consumed_lines_to(value)
         while @consumed_lines < value
-          print "\n"
+          STDOUT.print "\n"
           @consumed_lines += 1
         end
       end
