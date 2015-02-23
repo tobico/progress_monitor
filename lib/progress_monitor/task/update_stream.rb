@@ -1,3 +1,5 @@
+require 'observer'
+
 module ProgressMonitor
   class Task
     class UpdateStream

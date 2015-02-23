@@ -1,3 +1,5 @@
+require 'progress_monitor/display/line_renderer'
+
 module ProgressMonitor
   class Display
     class MultiLineRenderer

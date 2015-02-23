@@ -95,7 +95,7 @@ class Example
 
   def perform
     task = ProgressMonitor::Task.new("Demonstrate Progress Monitor")
-    ProgressMonitor::Display.new(task).display do
+    ProgressMonitor::Display.new(task).show do
       create_users_task = task.add_subtask("Create users")
       shuffle_deck_chairs = task.add_subtask("Shuffle deck chairs")
 

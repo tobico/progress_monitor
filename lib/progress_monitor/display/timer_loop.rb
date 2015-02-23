@@ -1,6 +1,8 @@
+require 'progress_monitor/support/service'
+
 module ProgressMonitor
   class Display
-    class TimerLoop
+    class TimerLoop < Support::Service
       attr :queue
 
       def initialize(queue)

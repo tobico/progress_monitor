@@ -1,10 +1,11 @@
-require "progress_monitor/task/percentage_calculation/status"
-require "progress_monitor/task/percentage_calculation/file_position"
-require "progress_monitor/task/percentage_calculation/average_completion_of_subtasks"
+require 'progress_monitor/task/percentage_calculation/status'
+require 'progress_monitor/task/percentage_calculation/file_position'
+require 'progress_monitor/task/percentage_calculation/average_completion_of_subtasks'
+require 'progress_monitor/support/service'
 
 module ProgressMonitor
   class Task
-    class PercentageCalculation
+    class PercentageCalculation < Support::Service
       PERCENTAGE_CALCULATORS = [
         Status,
         FilePosition,
@@ -19,7 +20,7 @@ module ProgressMonitor
 
       def perform
         PERCENTAGE_CALCULATORS.each do |calculator|
-          result = calculator.new(task).perform
+          result = calculator.perform(task)
           return result if result
         end
         :unknown

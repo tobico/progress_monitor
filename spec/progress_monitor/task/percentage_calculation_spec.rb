@@ -6,16 +6,15 @@ RSpec.describe ProgressMonitor::Task::PercentageCalculation do
 
   describe '#perform' do
     subject(:perform) { percentage_calculation.perform }
-    let(:calculator) { double 'calculator', perform: calculator_result }
     let(:calculator_result) { 15 }
     before do
       calculators.each do |calculator_class|
-        allow(calculator_class).to receive(:new) { calculator }
+        allow(calculator_class).to receive(:perform) { calculator_result }
       end
     end
 
-    it 'creates calculator for task' do
-      expect(calculators.first).to receive(:new).with(task)
+    it 'performs calculation for task' do
+      expect(calculators.first).to receive(:perform).with(task)
       perform
     end
 
@@ -38,7 +37,7 @@ RSpec.describe ProgressMonitor::Task::PercentageCalculation do
     context 'when an error occurs' do
       let(:e) { StandardError.new }
       before do
-        allow(calculators.first).to receive(:new).and_raise(e)
+        allow(calculators.first).to receive(:perform).and_raise(e)
         allow(percentage_calculation).to receive(:puts)
       end
 

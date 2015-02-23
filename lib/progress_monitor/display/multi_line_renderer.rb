@@ -1,4 +1,6 @@
-require "progress_monitor/display/multi_line_renderer/line_renderer_collection"
+require 'progress_monitor/display/row_mover'
+require 'progress_monitor/display/message_renderer'
+require 'progress_monitor/display/multi_line_renderer/line_renderer_collection'
 
 module ProgressMonitor
   class Display
@@ -24,7 +26,7 @@ module ProgressMonitor
         STDOUT.print "\n"
         RowMover.new(@line_renderer_collection.count - 1) do |row_mover|
           row_mover.row = -1
-          MessageRenderer.new(message).render
+          MessageRenderer.perform(message)
         end
         @line_renderer_collection.refresh(true)
       end

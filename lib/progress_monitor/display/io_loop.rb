@@ -1,6 +1,8 @@
+require 'progress_monitor/support/service'
+
 module ProgressMonitor
   class Display
-    class IoLoop
+    class IoLoop < Support::Service
       attr :queue, :io
 
       def initialize(queue, io)

@@ -1,5 +1,5 @@
-require "progress_monitor/task/update_stream"
-require "progress_monitor/task/percentage_calculation"
+require 'progress_monitor/task/update_stream'
+require 'progress_monitor/task/percentage_calculation'
 
 module ProgressMonitor
   class Task
@@ -14,7 +14,7 @@ module ProgressMonitor
     end
 
     def add_subtask(name)
-      Task.new(name, update_stream).tap do |task|
+      self.class.new(name, update_stream).tap do |task|
         @subtasks << task
       end
     end
@@ -52,7 +52,7 @@ module ProgressMonitor
     end
 
     def completion_percent
-      PercentageCalculation.new(self).perform
+      PercentageCalculation.perform(self)
     end
   end
 end

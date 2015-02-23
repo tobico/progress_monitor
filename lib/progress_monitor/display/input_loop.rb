@@ -1,6 +1,9 @@
+require 'io/console'
+require 'progress_monitor/support/service'
+
 module ProgressMonitor
   class Display
-    class InputLoop
+    class InputLoop < Support::Service
       attr :queue
 
       def initialize(queue)

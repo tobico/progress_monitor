@@ -1,7 +1,9 @@
+require 'progress_monitor/support/service'
+
 module ProgressMonitor
   class Task
-    class PercentageCalculation
-      class AverageCompletionOfSubtasks
+    class PercentageCalculation < Support::Service
+      class AverageCompletionOfSubtasks < Support::Service
         attr :task
 
         def initialize(task)

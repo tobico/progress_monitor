@@ -1,6 +1,8 @@
+require 'progress_monitor/support/service'
+
 module ProgressMonitor
   class Display
-    class MessageLoop
+    class MessageLoop < Support::Service
       attr :queue, :main_thread, :renderer
 
       def initialize(queue, main_thread, renderer)

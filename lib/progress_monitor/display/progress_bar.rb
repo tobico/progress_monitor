@@ -1,7 +1,9 @@
+require 'progress_monitor/support/service'
+
 module ProgressMonitor
   class Display
     # Renders a fancy unicode progress bar
-    class ProgressBar
+    class ProgressBar < Support::Service
       attr_accessor :size, :completion_percent
 
       def initialize(size: 20, completion_percent: 0)
@@ -13,7 +15,7 @@ module ProgressMonitor
       BAR_SPACE = " "
       BAR_PARTIAL_PROGRESS = [BAR_SPACE, '▏', '▎', '▍', '▌', '▋', '▊', '▉']
 
-      def render
+      def perform
         if completion_percent == :unknown
           ''
         else

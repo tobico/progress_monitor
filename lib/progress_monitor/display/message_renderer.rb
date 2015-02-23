@@ -1,13 +1,15 @@
+require 'progress_monitor/support/service'
+
 module ProgressMonitor
   class Display
-    class MessageRenderer
+    class MessageRenderer < Support::Service
       attr :message
 
       def initialize(message)
         @message = message
       end
 
-      def render
+      def perform
         STDOUT.print clear_code, info_tag, message
       end
 

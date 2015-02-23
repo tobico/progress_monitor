@@ -1,3 +1,6 @@
+require 'io/console'
+require 'progress_monitor/display/progress_bar'
+
 module ProgressMonitor
   class Display
     # Renders a single line on the terminal showing the name and progress of a task
@@ -6,12 +9,12 @@ module ProgressMonitor
 
       def initialize(task)
         @current_state = :force_refresh
-        @task = task
+        @task          = task
       end
 
       def task=(value)
-        old_value = task
-        @task = value
+        old_value      = task
+        @task          = value
         @current_state = :force_refresh if value != old_value
       end
 
@@ -38,11 +41,9 @@ module ProgressMonitor
 
       def render(state)
         if task
-          left                            = state[:name]
-          progress_bar                    = ProgressBar.new(size: 20)
-          progress_bar.completion_percent = state[:completion_percent]
-          right                           = progress_bar.render
-          spacing                         = " " * (columns - left.length - right.length)
+          left    = state[:name]
+          right   = ProgressBar.perform(size: 20, completion_percent: state[:completion_percent])
+          spacing = " " * (columns - left.length - right.length)
 
           STDOUT.print clear_code, left, spacing, "\e[48;5;235m\e[32m", right, "\e[0m\r\e[#{left.length}C"
         else
